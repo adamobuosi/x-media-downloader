@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Necessário para salvar em Downloads/Directories público apenas no Android 5->9 (API 24-28).
+         Em Android 10+ usamos MediaStore, que não exige permissão. -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.XMediaDownloader"
+        tools:targetApi="34">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.XMediaDownloader">
+
+            <!-- Abrir pelo launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Aparecer no menu "Compartilhar" do app do X/Twitter (texto ou URL) -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
+
+            <!-- Abrir link do X/Twitter direto no app (opcional, quando o usuário escolher) -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="twitter.com" android:pathPrefix="/status" />
+                <data android:scheme="https" android:host="www.twitter.com" android:pathPrefix="/status" />
+                <data android:scheme="https" android:host="mobile.twitter.com" android:pathPrefix="/status" />
+                <data android:scheme="https" android:host="x.com" android:pathPrefix="/status" />
+                <data android:scheme="https" android:host="www.x.com" android:pathPrefix="/status" />
+                <data android:scheme="https" android:host="mobile.x.com" android:pathPrefix="/status" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
